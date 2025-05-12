@@ -39,7 +39,7 @@ public class Dealership {
         } return matchedVehicles;
     }
     //
-    public List<Vehicle> getVehiclesByYear(double min, double max) {
+    public List<Vehicle> getVehiclesByYear(int min, int max) {
         List<Vehicle> matchedVehicles = new ArrayList<>();
         for(Vehicle eachVehicle : inventory) {
             if (eachVehicle.getYear() >= min && eachVehicle.getYear() <= max) {

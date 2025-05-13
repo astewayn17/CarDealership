@@ -74,7 +74,7 @@ public class Dealership {
             }
         } return matchedVehicles;
     }
-    //
+
  //    public Vehicle getVehicleByVin(int vin) {
  //       for (Vehicle vehicle : inventory) {
  //           if (vehicle.getVin() == vin) {

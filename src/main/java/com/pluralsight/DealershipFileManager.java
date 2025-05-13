@@ -1,7 +1,6 @@
 package com.pluralsight;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class DealershipFileManager {
 
@@ -65,7 +64,7 @@ public class DealershipFileManager {
             }
             buffWriteBoi.close();
         } catch (IOException e) {
-            System.out.println("Error writing dealership file: " + e.getMessage());
+            System.out.println("\nError writing dealership file: " + e.getMessage());
         }
     }
 }

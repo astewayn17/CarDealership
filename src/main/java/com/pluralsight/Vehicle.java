@@ -2,7 +2,7 @@ package com.pluralsight;
 
 public class Vehicle {
 
-    //
+    // Declaring vehicle class variables
     private int vin;
     private int year;
     private String make;
@@ -12,7 +12,7 @@ public class Vehicle {
     private int odometer;
     private double price;
 
-    //
+    // Constructor
     public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
         this.vin = vin;
         this.year = year;
@@ -24,7 +24,7 @@ public class Vehicle {
         this.price = price;
     }
 
-    //
+    // Setters and getters
     public int getVin() { return vin; }
     public void setVin(int vin) { this.vin = vin; }
     public int getYear() { return year; }
@@ -42,7 +42,7 @@ public class Vehicle {
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
 
-    //
+    // This toString is implicitly called by the displayVehicles method in the User Interface class
     @Override
     public String toString() {
         return String.format("%d | %d | %s | %s | %s | %s | %d | $%.2f",

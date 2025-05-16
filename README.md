@@ -1,7 +1,11 @@
 <h1 align="center">🚗 Welcome to the Car Dealership! 🏎️</h1>
 
-<h3 align="center">*🚀 Updated version available!*</h3>
-<h3 align="center">*Switch to the [advanced-dealership](https://github.com/astewayn17/CarDealership.git) branch for the latest features  including leasing/selling!*</h3>
+<p align="center">
+  <em>
+    🚀 Updated version available! Switch to the <a href="https://github.com/astewayn17/CarDealership/tree/advanced-dealership">advanced-dealership</a>
+    branch for the latest features including leasing/selling!
+  </em>
+</p>
 
 ## 📦 Features
 - Display vehicles by: price range, make & model, year, color, mileage, type (car/truck/SUV/van)

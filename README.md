@@ -1,5 +1,8 @@
 <h1 align="center">🚗 Welcome to the Car Dealership! 🏎️</h1>
 
+<h3 align="center">*🚀 Updated version available!*</h3>
+<h3 align="center">*Switch to the [advanced-dealership](https://github.com/astewayn17/CarDealership.git) branch for the latest features  including leasing/selling!*</h3>
+
 ## 📦 Features
 - Display vehicles by: price range, make & model, year, color, mileage, type (car/truck/SUV/van)
 - Add a new vehicle or remove a vehicle by VIN

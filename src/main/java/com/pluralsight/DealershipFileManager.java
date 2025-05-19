@@ -49,16 +49,18 @@ public class DealershipFileManager {
             //Uses the buffered writer to concatenate the dealership's info with pipes
             buffWriteBoi.write(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
             buffWriteBoi.newLine();
-            // Loops through all vehicles information and uses the getters to concatenate the information to write
+            // Loops through all vehicles information and uses the getters to add all the information into the string
+            // formatter to write
             for (Vehicle vehicle : dealership.getAllVehicles()) {
-                String line = vehicle.getVin() + "|" +
-                        vehicle.getYear() + "|" +
-                        vehicle.getMake() + "|" +
-                        vehicle.getModel() + "|" +
-                        vehicle.getVehicleType() + "|" +
-                        vehicle.getColor() + "|" +
-                        vehicle.getOdometer() + "|" +
-                        vehicle.getPrice();
+                String line = String.format("%d|%d|%s|%s|%s|%s|%d|%.2f",
+                        vehicle.getVin(),
+                        vehicle.getYear(),
+                        vehicle.getMake(),
+                        vehicle.getModel(),
+                        vehicle.getVehicleType(),
+                        vehicle.getColor(),
+                        vehicle.getOdometer(),
+                        vehicle.getPrice());
                 buffWriteBoi.write(line);
                 buffWriteBoi.newLine();
             }
@@ -68,4 +70,3 @@ public class DealershipFileManager {
         }
     }
 }
-

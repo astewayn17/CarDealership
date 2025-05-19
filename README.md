@@ -3,6 +3,7 @@
 ## 📦 Features
 - Display vehicles by: price range, make & model, year, color, mileage, type (car/truck/SUV/van)
 - Add a new vehicle or remove a vehicle by VIN
+- Sell or lease out a vehicle to a customer with detailed financing information!
 
 ## 🛠️ How to Run
 
@@ -16,25 +17,31 @@
 
 ```
 CarDealership/
-├── .idea/                      # IntelliJ project settings
-├── screenshots/                # (Optional) Screenshots for documentation
+├── .idea/                          # IntelliJ project settings
+├── screenshots/                   # (Optional) Screenshots for documentation
 ├── src/
 │   └── main/
 │       ├── java/
 │       │   └── com.pluralsight/
+│       │       ├── Contract.java
+│       │       ├── ContractFileManager.java
 │       │       ├── Dealership.java
 │       │       ├── DealershipFileManager.java
+│       │       ├── LeaseContract.java
 │       │       ├── Program.java
+│       │       ├── SalesContract.java
 │       │       ├── UserInterface.java
 │       │       └── Vehicle.java
 │       └── resources/
-│           └── inventory.csv   # Dealership + vehicle data
+│           ├── contracts.csv      # Saved sales/lease contracts
+│           └── inventory.csv      # Dealership + vehicle data
 ├── test/
-│   └── java/                   # (Optional) Unit tests
-├── target/                     # Compiled build output
-├── .gitignore                  # Git ignore rules
-├── pom.xml                     # Maven build configuration
-└── README.md                   # Project documentation
+│   └── java/                      # (Optional) Unit tests
+├── target/                        # Compiled build output
+├── .gitignore                     # Git ignore rules
+├── pom.xml                        # Maven build configuration
+└── README.md                      # Project documentation
+
 ```
 
 ## 📷 UI Screenshots
@@ -42,11 +49,11 @@ CarDealership/
 <table>
   <tr>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/main/screenshots/home_screen.png" width="400"/><br/>
+      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/home_screen.png" width="380"/><br/>
       <sub><i>Home Screen</i></sub>
     </td>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/main/screenshots/exit_the_app.png" width="340"/><br/>
+      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/exit_the_app.png" width="350"/><br/>
       <sub><i>Exit Confirmation</i></sub>
     </td>
   </tr>
@@ -55,7 +62,7 @@ CarDealership/
 <table>
   <tr>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/main/screenshots/list_all_vehicles.png" width="370"/><br/>
+      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/list_all_vehicles.png" width="420"/><br/>
       <sub><i>Listing All Vehicles</i></sub>
     </td>
     <td align="center" width="500">
@@ -68,12 +75,25 @@ CarDealership/
 <table>
   <tr>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/main/screenshots/adding_a_vehicle.png" width="380"/><br/>
+      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/adding_a_vehicle.png" width="380"/><br/>
       <sub><i>Adding a Vehicle</i></sub>
     </td>
     <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/main/screenshots/removing_a_vehicle.png" width="380"/><br/>
+      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/removing_a_vehicle.png" width="380"/><br/>
       <sub><i>Removing a Vehicle</i></sub>
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td align="center" width="500">
+      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/selling_a_vehicle.png" width="380"/><br/>
+      <sub><i>Selling a Vehicle</i></sub>
+    </td>
+    <td align="center" width="500">
+      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/leasing_a_vehicle.png" width="380"/><br/>
+      <sub><i>Leasing a Vehicle</i></sub>
     </td>
   </tr>
 </table>

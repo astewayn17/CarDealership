@@ -1,9 +1,9 @@
-package com.pluralsight;
+package com.pluralsight.models;
 
 public class Vehicle {
 
     // Declaring vehicle class variables
-    private int vin;
+    private String vin;
     private int year;
     private String make;
     private String model;
@@ -13,7 +13,7 @@ public class Vehicle {
     private double price;
 
     // Constructor
-    public Vehicle(int vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
+    public Vehicle(String vin, int year, String make, String model, String vehicleType, String color, int odometer, double price) {
         this.vin = vin;
         this.year = year;
         this.make = make;
@@ -25,8 +25,8 @@ public class Vehicle {
     }
 
     // Setters and getters
-    public int getVin() { return vin; }
-    public void setVin(int vin) { this.vin = vin; }
+    public String getVin() { return vin; }
+    public void setVin(String vin) { this.vin = vin; }
     public int getYear() { return year; }
     public void setYear(int year) { this.year = year; }
     public String getMake() { return make; }
@@ -41,11 +41,4 @@ public class Vehicle {
     public void setOdometer(int odometer) { this.odometer = odometer; }
     public double getPrice() { return price; }
     public void setPrice(double price) { this.price = price; }
-
-    // This toString is implicitly called by the displayVehicles method in the User Interface class
-    @Override
-    public String toString() {
-        return String.format("%d | %d | %s | %s | %s | %s | %d | $%.2f",
-                vin, year, make, model, vehicleType, color, odometer, price);
-    }
 }

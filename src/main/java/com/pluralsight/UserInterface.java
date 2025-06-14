@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import com.pluralsight.models.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -9,13 +10,11 @@ public class UserInterface {
 
     // Declaring variables for storing dealership info and vehicle inventory, saving contracts to the CSV and scanner
     private Dealership dealership;
-    private ContractFileManager contractFileManager;
     private Scanner input;
 
     // Constructor that initializes the Scanner for user input and ContractFileManager for handling contracts
     public UserInterface() {
         this.input = new Scanner(System.in);
-        this.contractFileManager = new ContractFileManager();
     }
 
     // Method that shows the main UI and processes the preliminary choice input by the user
@@ -51,8 +50,6 @@ public class UserInterface {
 
     // Loads dealership data from CSV and puts it into dealership variable then it shows the first line
     private void init() {
-        DealershipFileManager fileManager = new DealershipFileManager();
-        this.dealership = fileManager.getDealership();
         if (dealership != null) {
             System.out.println("\n        WELCOME TO " + dealership.getName().toUpperCase());
             System.out.println("============================================");
@@ -64,7 +61,7 @@ public class UserInterface {
     // Shows the menu
     private void displayMenu() {
         System.out.println("(1) ----- Find vehicles within a price range");
-        System.out.println("(2) ----- Find vehicles by make / model");
+        System.out.println("(2) ----- Find vehicles by make/model");
         System.out.println("(3) ----- Find vehicles by year range");
         System.out.println("(4) ----- Find vehicles by color");
         System.out.println("(5) ----- Find vehicles by mileage range");
@@ -77,20 +74,7 @@ public class UserInterface {
         System.out.print("\nPlease select a number from the choices above: ");
     }
 
-    // Helper method used by the 'process...' methods to iterate through the list of vehicles and display them
-    private void displayVehicles(List<Vehicle> vehicles) {
-        if (vehicles == null || vehicles.isEmpty()) {
-            System.out.println("\nNo vehicles found!\n");
-            return;
-        }
-        System.out.println();
-        System.out.println("VIN | Year | Make | Model | Type | Color | Odometer | Price\n");
-        // This actually calls the toString behind the scenes implicitly from the vehicle class
-        for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle);
-        }
-        System.out.println();
-    }
+
     // User inputs the min and max parameters that are then put into the getVehiclesByPrice method in
     // the dealership class that then goes into the displayVehicles method to show them to the user
     private void processGetByPriceRequest() {
@@ -148,7 +132,7 @@ public class UserInterface {
     // a new vehicle object which is then added to the array list and then saved to the CSV.
     private void processAddVehicleRequest() {
         System.out.print("Enter the VIN: ");
-        int vin = input.nextInt();
+        String vin = input.nextLine().trim();
         System.out.print("Enter the year: ");
         int year = input.nextInt();
         input.nextLine();
@@ -168,8 +152,6 @@ public class UserInterface {
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
         dealership.addVehicle(vehicle);
         // Save updated dealership
-        DealershipFileManager fileManager = new DealershipFileManager();
-        fileManager.saveDealership(dealership);
         System.out.println("\nVehicle added and inventory updated successfully!\n");
     }
     // Handles vehicle removal by prompting the user for a VIN, locating the corresponding Vehicle object,
@@ -186,8 +168,6 @@ public class UserInterface {
             }
         }if (correspondingVehicle != null) {
             dealership.removeVehicle(correspondingVehicle);
-            DealershipFileManager fileManager = new DealershipFileManager();
-            fileManager.saveDealership(dealership);
             System.out.println("\nVehicle removed and inventory updated successfully!\n");
         } else {
             System.out.println("\nNo corresponding vehicle found with this VIN.\n");
@@ -303,14 +283,11 @@ public class UserInterface {
         String contractConfirmation = input.nextLine().trim();
         if (contractConfirmation.equalsIgnoreCase("y")) {
             // Save the contract to the CSV
-            contractFileManager.saveContract(contract);
             // Using the removeVehicle method to remove the corresponding vehicle from the dealership inventory
             dealership.removeVehicle(correspondingVehicle);
             // Create a new instance of DealershipFileManager to handle file operations. This class is responsible for
             // writing dealership data to the inventory.csv. Then it will use the saveDealership method to use the
             // instance to update and save the new inventory.csv
-            DealershipFileManager fileManager = new DealershipFileManager();
-            fileManager.saveDealership(dealership);
             System.out.println("\nContract has been successfully confirmed and the vehicle has been removed from the inventory!\n");
         } else {
             System.out.println("\nContract has been canceled. Back to menu.\n");

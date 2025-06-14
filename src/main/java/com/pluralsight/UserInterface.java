@@ -1,5 +1,8 @@
 package com.pluralsight;
 
+import com.pluralsight.dao.LeaseContractDao;
+import com.pluralsight.dao.SalesContractDao;
+import com.pluralsight.dao.VehicleDao;
 import com.pluralsight.models.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,13 +11,19 @@ import java.util.Scanner;
 
 public class UserInterface {
 
-    // Declaring variables for storing dealership info and vehicle inventory, saving contracts to the CSV and scanner
     private Dealership dealership;
     private Scanner input;
+    private VehicleDao vehicleDao;
+    private SalesContractDao salesContractDao;
+    private LeaseContractDao leaseContractDao;
 
-    // Constructor that initializes the Scanner for user input and ContractFileManager for handling contracts
-    public UserInterface() {
+    public UserInterface(Dealership dealership, VehicleDao vehicleDao,
+                         SalesContractDao salesContractDao, LeaseContractDao leaseContractDao) {
         this.input = new Scanner(System.in);
+        this.dealership = dealership;
+        this.vehicleDao = vehicleDao;
+        this.salesContractDao = salesContractDao;
+        this.leaseContractDao = leaseContractDao;
     }
 
     // Method that shows the main UI and processes the preliminary choice input by the user

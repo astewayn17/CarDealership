@@ -2,7 +2,6 @@ package com.pluralsight.dao;
 
 import com.pluralsight.models.LeaseContract;
 import org.apache.commons.dbcp2.BasicDataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

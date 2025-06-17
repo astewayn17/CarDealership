@@ -1,3 +1,4 @@
+
 package com.pluralsight.dao;
 
 import com.pluralsight.models.Vehicle;
@@ -130,6 +131,23 @@ public class VehicleDao {
         return vehicles;
     }
 
+    public List<Vehicle> getAllVehicles() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        String query = """
+                SELECT *
+                FROM Vehicles
+                WHERE Sold = FALSE;""";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) { vehicles.add(mapVehicle(resultSet)); }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error when getting all vehicles: " + e.getMessage(), e);
+        }
+        return vehicles;
+    }
+
     public Vehicle getVehicleByVin(String vin) {
         String query = """
                 SELECT *
@@ -169,6 +187,20 @@ public class VehicleDao {
 
     public void removeVehicleByVin(String vin) {
         String query = """
+                UPDATE Vehicles
+                SET Sold = TRUE
+                WHERE VIN = ?;""";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, vin);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error when marking vehicle as sold: " + e.getMessage(), e);
+        }
+    }
+
+    public void deleteVehicleByVin(String vin) {
+        String query = """
                 DELETE FROM Vehicles
                 WHERE VIN = ?;""";
         try (Connection connection = dataSource.getConnection();
@@ -176,7 +208,7 @@ public class VehicleDao {
             preparedStatement.setString(1, vin);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error when removing vehicle: " + e.getMessage(), e);
+            throw new RuntimeException("Error when deleting vehicle: " + e.getMessage(), e);
         }
     }
 

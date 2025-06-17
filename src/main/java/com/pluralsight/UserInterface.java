@@ -59,7 +59,7 @@ public class UserInterface {
 
     private void init() {
         if (dealership != null) {
-            System.out.println("\n        WELCOME TO " + dealership.getName().toUpperCase());
+            System.out.println("\nWELCOME TO " + dealership.getName().toUpperCase());
             System.out.println("============================================");
         } else {
             System.out.println("\nError loading dealership data.");
@@ -67,12 +67,12 @@ public class UserInterface {
     }
 
     private void displayMenu() {
-        System.out.println("(1) ----- Find vehicles within a price range");
+        System.out.println("\n(1) ----- Find vehicles within a price range");
         System.out.println("(2) ----- Find vehicles by make/model");
         System.out.println("(3) ----- Find vehicles by year range");
         System.out.println("(4) ----- Find vehicles by color");
         System.out.println("(5) ----- Find vehicles by mileage range");
-        System.out.println("(6) ----- Find vehicles by type (car/truck/SUV/van)");
+        System.out.println("(6) ----- Find vehicles by type");
         System.out.println("(7) ----- List ALL vehicles");
         System.out.println("(8) ----- Add a vehicle");
         System.out.println("(9) ----- Remove a vehicle");
@@ -81,16 +81,164 @@ public class UserInterface {
         System.out.print("\nPlease select a number from the choices above: ");
     }
 
+    private void processGetByPriceRequest() {
+        System.out.print("\nEnter minimum price: ");
+        double minPrice = input.nextDouble();
+        System.out.print("Enter maximum price: ");
+        double maxPrice = input.nextDouble();
+        input.nextLine();
+
+        List<Vehicle> vehicles = vehicleDao.getVehiclesByPrice(minPrice, maxPrice);
+        if (vehicles.isEmpty()) {
+            System.out.println("\nNo vehicles found in that price range.");
+        } else {
+            System.out.println("\n      === Vehicles in Price Range $" + minPrice + " - $" + maxPrice + " ===");
+            displayVehicles(vehicles);
+        }
+    }
+
+    private void processGetByMakeModelRequest() {
+        System.out.print("\nEnter vehicle make: ");
+        String make = input.nextLine().trim();
+        System.out.print("Enter vehicle model: ");
+        String model = input.nextLine().trim();
+
+        List<Vehicle> vehicles = vehicleDao.getVehiclesByMakeModel(make, model);
+        if (vehicles.isEmpty()) {
+            System.out.println("\nNo vehicles found for " + make + " " + model);
+        } else {
+            System.out.println("\n      === " + make + " " + model + " Vehicles ===");
+            displayVehicles(vehicles);
+        }
+    }
+
+    private void processGetByYearRequest() {
+        System.out.print("\nEnter minimum year: ");
+        int minYear = input.nextInt();
+        System.out.print("Enter maximum year: ");
+        int maxYear = input.nextInt();
+        input.nextLine();
+
+        List<Vehicle> vehicles = vehicleDao.getVehiclesByYear(minYear, maxYear);
+        if (vehicles.isEmpty()) {
+            System.out.println("\nNo vehicles found in that year range.");
+        } else {
+            System.out.println("\n      === Vehicles from " + minYear + " to " + maxYear + " ===");
+            displayVehicles(vehicles);
+        }
+    }
+
+    private void processGetByColorRequest() {
+        System.out.print("\nEnter vehicle color: ");
+        String color = input.nextLine().trim();
+
+        List<Vehicle> vehicles = vehicleDao.getVehiclesByColor(color);
+        if (vehicles.isEmpty()) {
+            System.out.println("\nNo vehicles found in " + color + " color.");
+        } else {
+            System.out.println("\n      === " + color + " Vehicles ===");
+            displayVehicles(vehicles);
+        }
+    }
+
+    private void processGetByMileageRequest() {
+        System.out.print("\nEnter minimum mileage: ");
+        int minMileage = input.nextInt();
+        System.out.print("Enter maximum mileage: ");
+        int maxMileage = input.nextInt();
+        input.nextLine();
+
+        List<Vehicle> vehicles = vehicleDao.getVehiclesByMileage(minMileage, maxMileage);
+        if (vehicles.isEmpty()) {
+            System.out.println("\nNo vehicles found in that mileage range.");
+        } else {
+            System.out.println("\n      === Vehicles with " + minMileage + " - " + maxMileage + " miles ===");
+            displayVehicles(vehicles);
+        }
+    }
+
+    private void processGetByTypeRequest() {
+        System.out.print("\nEnter vehicle type (Sedan/Truck/SUV/Coupe/Van): ");
+        String type = input.nextLine().trim();
+
+        List<Vehicle> vehicles = vehicleDao.getVehiclesByType(type);
+        if (vehicles.isEmpty()) {
+            System.out.println("\nNo vehicles found of type: " + type);
+        } else {
+            System.out.println("\n      === " + type + " Vehicles ===");
+            displayVehicles(vehicles);
+        }
+    }
+
+    private void processAllVehiclesRequest() {
+        List<Vehicle> vehicles = vehicleDao.getAllVehicles();
+        if (vehicles.isEmpty()) {
+            System.out.println("\nNo vehicles currently in inventory.");
+        } else {
+            System.out.println("\n      === All Available Vehicles ===");
+            displayVehicles(vehicles);
+        }
+    }
+
+    private void processAddVehicleRequest() {
+        System.out.println("\n      === Add New Vehicle ===");
+        System.out.print("Enter VIN: ");
+        String vin = input.nextLine().trim();
+        System.out.print("Enter year: ");
+        int year = input.nextInt();
+        input.nextLine(); // consume newline
+        System.out.print("Enter make: ");
+        String make = input.nextLine().trim();
+        System.out.print("Enter model: ");
+        String model = input.nextLine().trim();
+        System.out.print("Enter vehicle type (Sedan/Truck/SUV/Coupe/Van): ");
+        String vehicleType = input.nextLine().trim();
+        System.out.print("Enter color: ");
+        String color = input.nextLine().trim();
+        System.out.print("Enter odometer reading: ");
+        int odometer = input.nextInt();
+        System.out.print("Enter price: ");
+        double price = input.nextDouble();
+        input.nextLine();
+
+        Vehicle newVehicle = new Vehicle(vin, year, make, model, vehicleType, color, odometer, price);
+        vehicleDao.addVehicle(newVehicle);
+        System.out.println("\nVehicle added successfully!");
+    }
+
+    private void processRemoveVehicleRequest() {
+        System.out.print("\nEnter the VIN of the vehicle to remove: ");
+        String vin = input.nextLine().trim();
+
+        Vehicle vehicle = vehicleDao.getVehicleByVin(vin);
+        if (vehicle == null) {
+            System.out.println("\nNo vehicle found with VIN: " + vin);
+            return;
+        }
+
+        System.out.println("\nAre you sure you want to remove this vehicle?");
+        System.out.println(vehicle);
+        System.out.print("Enter (Y/N): ");
+        String confirmation = input.nextLine().trim();
+
+        if (confirmation.equalsIgnoreCase("Y")) {
+            vehicleDao.deleteVehicleByVin(vin);
+            System.out.println("\nVehicle removed successfully!");
+        } else {
+            System.out.println("\nRemoval cancelled.");
+        }
+    }
+
     private void processSellLeaseVehicleRequest() {
-        List<Vehicle> availableVehicles = vehicleDao.getVehiclesByPrice(0, Double.MAX_VALUE); // All unsold vehicles
+        List<Vehicle> availableVehicles = vehicleDao.getAllVehicles();
         if (availableVehicles.isEmpty()) {
-            System.out.println("No vehicles are available.");
+            System.out.println("\nNo vehicles are available.");
             return;
         }
 
         System.out.println("\n      === Available Vehicles for Sale or Lease ===");
         displayVehicles(availableVehicles);
-        System.out.print("Please enter the VIN of the vehicle you would like to sell or lease out: ");
+        System.out.print("\nPlease enter the VIN of the vehicle you would like to sell or lease out: ");
         String vinChoice = input.nextLine();
 
         Vehicle correspondingVehicle = null;
@@ -102,7 +250,7 @@ public class UserInterface {
         }
 
         if (correspondingVehicle == null) {
-            System.out.println("\nNo vehicle available with that VIN. Please try again.\n");
+            System.out.println("\nNo vehicle available with that VIN. Please try again.");
             return;
         }
 
@@ -134,24 +282,36 @@ public class UserInterface {
             salesContractDao.save((SalesContract) contract);
         } else if (contractType.equalsIgnoreCase("l")) {
             if ((dateNow.getYear() - correspondingVehicle.getYear()) > 3) {
-                System.out.println("\nThis vehicle is ineligible for a lease due to being over 3 years old.\n");
+                System.out.println("\nThis vehicle is ineligible for a lease due to being over 3 years old.");
                 return;
             }
             contract = new LeaseContract(formattedDateNow, customerName, customerEmail, vehicleInfo,
                     correspondingVehicle.getPrice());
             leaseContractDao.save((LeaseContract) contract);
         } else {
-            System.out.println("\nInvalid option. Please try again.\n");
+            System.out.println("\nInvalid option. Please try again.");
             return;
         }
 
         vehicleDao.removeVehicleByVin(correspondingVehicle.getVin());
-        System.out.println("\nContract has been successfully confirmed and the vehicle has been removed from the inventory!\n");
+        System.out.println("\nContract has been successfully confirmed and the vehicle has been marked as sold!");
     }
 
     private void displayVehicles(List<Vehicle> vehicles) {
+        System.out.println("\n VIN                | Year | Make          | Model                | Type     | Color           | Mileage  | Price");
+        System.out.println("--------------------------------------------------------------------------------------------------------------------------");
         for (Vehicle vehicle : vehicles) {
-            System.out.println(vehicle);
+            System.out.printf(" %-18s | %-4d | %-13s | %-20s | %-8s | %-15s | %-8d | $%,.2f%n",
+                    vehicle.getVin(),
+                    vehicle.getYear(),
+                    vehicle.getMake(),
+                    vehicle.getModel(),
+                    vehicle.getVehicleType(),
+                    vehicle.getColor(),
+                    vehicle.getOdometer(),
+                    vehicle.getPrice()
+            );
         }
+        System.out.println();
     }
 }

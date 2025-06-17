@@ -20,12 +20,11 @@ public class Program {
         dataSource.setPassword(password);
 
         // Create DAO objects
-        DealershipDao dealershipDao = new DealershipDao(dataSource);
         VehicleDao vehicleDao = new VehicleDao(dataSource);
         SalesContractDao salesContractDao = new SalesContractDao(dataSource);
         LeaseContractDao leaseContractDao = new LeaseContractDao(dataSource);
 
-        // Hardcoded Dealership (could later be fetched from DB)
+        // Create dealership instance (could be fetched from DB in future if needed)
         Dealership dealership = new Dealership("Asteway Auto Center", "123 Main St", "555-123-4567");
 
         // Start UI

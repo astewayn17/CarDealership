@@ -1,135 +1,127 @@
 <h1 align="center">🚗 Welcome to the Car Dealership! 🏎️</h1>
 
 ## 📦 Features
-- Display vehicles by: price range, make & model, year, color, mileage, type (car/truck/SUV/van)
-- Add a new vehicle or remove a vehicle by VIN
-- Sell or lease out a vehicle to a customer with detailed financing information!
+
+### Vehicle Management
+- Search vehicles by: price, make/model, year, color, mileage, or type
+- Add new vehicles or remove existing ones by VIN
+- View all available inventory
+### Contract Processing
+- Sales: Cash or finance options with automatic APR and fee calculations
+- Lease: 36-month terms for vehicles ≤3 years old with fixed 4% APR
+- Smart monthly payment calculations using loan amortization formulas
+### Database Integration
+- MySQL database with connection pooling
+- Persistent storage for vehicles and contracts
+- Real-time inventory tracking (vehicles marked as sold, not deleted)
 
 ## 🛠️ How to Run
 
 1. Clone the repo.
-2. Open in IntelliJ (or any Java IDE).
-3. Make sure `inventory.csv` is in `src/main/resources/`.
-4. Run `Program.java`.
-5. Interact through the console menu.
+2. Set up MySQL database and run the provided SQL script.
+3. Update database credentials in `Program.java`:
+   ```java
+   javaString username = "your_username";
+   String password = "your_password";
+   ```
+4. Open in IntelliJ (or any Java IDE).
+5. Run `mvn clean compile` to build.
+6. Run Program.java.
+7. Interact through the console menu.
 
 ## 📁 File Structure
 
 ```
 CarDealership/
-├── .idea/                          # IntelliJ project settings
-├── screenshots/                   # (Optional) Screenshots for documentation
+├── .idea/
+├── screenshots/
 ├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com.pluralsight/
-│       │       ├── Contract.java
-│       │       ├── ContractFileManager.java
-│       │       ├── Dealership.java
-│       │       ├── DealershipFileManager.java
-│       │       ├── LeaseContract.java
-│       │       ├── Program.java
-│       │       ├── SalesContract.java
-│       │       ├── UserInterface.java
-│       │       └── Vehicle.java
-│       └── resources/
-│           ├── contracts.csv      # Saved sales/lease contracts
-│           └── inventory.csv      # Dealership + vehicle data
-├── test/
-│   └── java/                      # (Optional) Unit tests
-├── target/                        # Compiled build output
-├── .gitignore                     # Git ignore rules
-├── pom.xml                        # Maven build configuration
-└── README.md                      # Project documentation
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── pluralsight/
+│   │   │           ├── dao/
+│   │   │           │   ├── LeaseContractDao.java
+│   │   │           │   ├── SalesContractDao.java
+│   │   │           │   └── VehicleDao.java
+│   │   │           ├── models/
+│   │   │           │   ├── Contract.java
+│   │   │           │   ├── Dealership.java
+│   │   │           │   ├── LeaseContract.java
+│   │   │           │   ├── SalesContract.java
+│   │   │           │   └── Vehicle.java
+│   │   │           ├── Program.java
+│   │   │           └── UserInterface.java
+│   │   └── resources/
+│   └── test/
+├── target/
+├── .gitignore
+├── pom.xml
+└── README.md
 
 ```
 
-## 📷 UI Screenshots
+## 📷 Screenshots
+### Home Screen
+```
+        WELCOME TO ASTEWAY AUTO CENTER
+============================================
 
-<table>
-  <tr>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/home_screen.png" width="380"/><br/>
-      <sub><i>Home Screen</i></sub>
-    </td>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/exit_the_app.png" width="350"/><br/>
-      <sub><i>Exit Confirmation</i></sub>
-    </td>
-  </tr>
-</table>
+(1) ----- Find vehicles within a price range
+(2) ----- Find vehicles by make/model
+(3) ----- Find vehicles by year range
+(4) ----- Find vehicles by color
+(5) ----- Find vehicles by mileage range
+(6) ----- Find vehicles by type (car/truck/SUV/van)
+(7) ----- List ALL vehicles
+(8) ----- Add a vehicle
+(9) ----- Remove a vehicle
+(10) ---- Sell or Lease a vehicle
+(99) ---- Quit
 
-<table>
-  <tr>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/list_all_vehicles.png" width="420"/><br/>
-      <sub><i>Listing All Vehicles</i></sub>
-    </td>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/main/screenshots/vehicles_by_price.png" width="360"/><br/>
-      <sub><i>Searching by Price</i></sub>
-    </td>
-  </tr>
-</table>
+Please select a number from the choices above: 
+```
 
-<table>
-  <tr>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/adding_a_vehicle.png" width="380"/><br/>
-      <sub><i>Adding a Vehicle</i></sub>
-    </td>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/removing_a_vehicle.png" width="380"/><br/>
-      <sub><i>Removing a Vehicle</i></sub>
-    </td>
-  </tr>
-</table>
+### Vehicle Display Screen
+```
+      === All Available Vehicles ===
 
-<table>
-  <tr>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/selling_a_vehicle.png" width="380"/><br/>
-      <sub><i>Selling a Vehicle</i></sub>
-    </td>
-    <td align="center" width="500">
-      <img src="https://github.com/astewayn17/CarDealership/blob/advanced-dealership/screenshots/leasing_a_vehicle.png" width="380"/><br/>
-      <sub><i>Leasing a Vehicle</i></sub>
-    </td>
-  </tr>
-</table>
+ VIN                  | Year | Make          | Model         | Type     | Color      | Mileage  | Price
+----------------------------------------------------------------------------------------------------------
+ 1HGCM82633A004352    | 2021 | Honda         | Civic         | Sedan    | Blue       |   30,000 | $19,500.00
+ 1FTRX12W37FA12345    | 2022 | Ford          | F-150         | Truck    | Black      |   12,000 | $34,000.00
+ SCFRMFAV3JGL12345    | 2019 | Aston Martin  | DB11          | Coupe    | Midnight Blue |    8,000 | $210,000.00
+```
 
-## 🧠 Interesting Code
-**Method to read the dealership and vehicle information:**
-One of the more interesting parts of my code is how it reads vehicle and dealership data from a CSV file, formats it, 
-and stores it into an `ArrayList` as structured objects. This approach allows the program to manage inventory without 
-relying on a database, demonstrating practical file handling and object-oriented design.
+### Error Handling Example
+```
+Enter minimum price: 50000
+Enter maximum price: 25000
+
+No vehicles found in that price range.
+```
+
+### Interesting Code: Contract Monthly Payment Calculation
+
+One of the most interesting pieces of code is the monthly payment calculation in the `SalesContract` class:
+This is interesting because it applies real-world financial mathematics, using the standard loan amortization formula found in actual dealership systems. The calculation dynamically adjusts based on vehicle price, selecting appropriate loan terms and APR rates. Additionally, the code is clean, well-commented, and uses clear, meaningful variable names.
+
 ```java
-public Dealership getDealership() {
-        Dealership dealership = null;
-        try {
-            FileReader fileReadBoi = new FileReader("src/main/resources/inventory.csv");
-            BufferedReader buffReadBoi = new BufferedReader(fileReadBoi);
-            String line = buffReadBoi.readLine();
-            if (line != null) {
-                String[] dealershipSegments = line.split("\\|");
-                dealership = new Dealership(dealershipSegments[0], dealershipSegments[1], dealershipSegments[2]);
-            }
-            while ((line = buffReadBoi.readLine()) != null) {
-                String[] segments = line.split("\\|");
-                int vin = Integer.parseInt(segments[0]);
-                int year = Integer.parseInt(segments[1]);
-                String make = segments[2];
-                String model = segments[3];
-                String type = segments[4];
-                String color = segments[5];
-                int odometer = Integer.parseInt(segments[6]);
-                double price = Double.parseDouble(segments[7]);
-                Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
-                dealership.addVehicle(vehicle);
-            }
-        }
-        catch (IOException e) {
-            System.out.println("Error reading dealership file: " + e.getMessage());
-        }
-        return dealership;
-    }
+@Override
+public double getMonthlyPayment() {
+    // If the customer chooses not to finance and buy the car at once, there will be no monthly payment
+    if (!finance) return 0;
+    
+    // Declaring these to be used in the formula
+    double monthlyRate = apr / 12;
+    double totalPrice = getTotalPrice();
+    
+    // Using the standard amortization formula for calculating fixed monthly payments
+    // P * (r * (1 + r)^n) / ((1 + r)^n - 1)
+    // P = Principal (loan amount, which is the total price)
+    // r = Monthly interest rate
+    // n = Total number of months
+    return (totalPrice * (monthlyRate * Math.pow(1 + monthlyRate, this.termMonths))) /
+            (Math.pow(1 + monthlyRate, this.termMonths) - 1);
+}
+```
